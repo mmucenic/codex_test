@@ -30,19 +30,31 @@
             margin: 0.5rem;
             cursor: pointer;
         }
-        #nails {
+        #hand {
             display: flex;
             justify-content: center;
             margin-top: 1rem;
-            height: 80px;
+            height: 120px;
             align-items: flex-end;
         }
-        .nail {
-            width: 20px;
-            background-color: #ffe4c4;
+        .finger {
+            position: relative;
+            width: 40px;
+            height: 100px;
+            background-color: #f5d6c6;
             margin: 0 5px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .finger .nail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 4px;
+            background-color: #fff;
             border: 1px solid #ccc;
-            border-radius: 5px 5px 0 0;
+            border-radius: 8px 8px 5px 5px;
             height: 20px;
             transition: height 0.3s;
         }
@@ -73,15 +85,16 @@
         <p>Press the button each time you resist the urge to bite your nails.</p>
         <div id="score">Score: 0</div>
         <div id="progress"><div id="progress-bar"></div></div>
-        <div id="nails">
-            <div class="nail"></div>
-            <div class="nail"></div>
-            <div class="nail"></div>
-            <div class="nail"></div>
-            <div class="nail"></div>
+        <div id="hand">
+            <div class="finger"><div class="nail"></div></div>
+            <div class="finger"><div class="nail"></div></div>
+            <div class="finger"><div class="nail"></div></div>
+            <div class="finger"><div class="nail"></div></div>
+            <div class="finger"><div class="nail"></div></div>
         </div>
         <button id="resist-btn">I Resisted!</button>
         <button id="succumb-btn">I Succumbed</button>
+        <button id="reset-btn">Reset</button>
         <div id="message"></div>
     </main>
 
@@ -91,14 +104,13 @@
         const scoreEl = document.getElementById('score');
         const progressBar = document.getElementById('progress-bar');
         const messageEl = document.getElementById('message');
+        const resetBtn = document.getElementById('reset-btn');
         const nails = document.querySelectorAll('.nail');
-
 
         let score = parseInt(localStorage.getItem('score')) || 0;
         updateDisplay();
 
         resistBtn.addEventListener('click', () => {
-
             score += 1;
             localStorage.setItem('score', score);
             updateDisplay();
@@ -123,7 +135,6 @@
             nails.forEach(nail => {
                 nail.style.height = 20 + level * 5 + 'px';
             });
-
         }
     </script>
 </body>
