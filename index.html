@@ -30,6 +30,22 @@
             margin: 0.5rem;
             cursor: pointer;
         }
+        #nails {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            height: 80px;
+            align-items: flex-end;
+        }
+        .nail {
+            width: 20px;
+            background-color: #ffe4c4;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px 5px 0 0;
+            height: 20px;
+            transition: height 0.3s;
+        }
         #progress {
             width: 80%;
             margin: 1rem auto;
@@ -57,21 +73,39 @@
         <p>Press the button each time you resist the urge to bite your nails.</p>
         <div id="score">Score: 0</div>
         <div id="progress"><div id="progress-bar"></div></div>
+        <div id="nails">
+            <div class="nail"></div>
+            <div class="nail"></div>
+            <div class="nail"></div>
+            <div class="nail"></div>
+            <div class="nail"></div>
+        </div>
         <button id="resist-btn">I Resisted!</button>
+        <button id="succumb-btn">I Succumbed</button>
         <div id="message"></div>
     </main>
 
     <script>
-        const button = document.getElementById('resist-btn');
+        const resistBtn = document.getElementById('resist-btn');
+        const succumbBtn = document.getElementById('succumb-btn');
         const scoreEl = document.getElementById('score');
         const progressBar = document.getElementById('progress-bar');
         const messageEl = document.getElementById('message');
+        const nails = document.querySelectorAll('.nail');
+
 
         let score = parseInt(localStorage.getItem('score')) || 0;
         updateDisplay();
 
-        button.addEventListener('click', () => {
+        resistBtn.addEventListener('click', () => {
+
             score += 1;
+            localStorage.setItem('score', score);
+            updateDisplay();
+        });
+
+        succumbBtn.addEventListener('click', () => {
+            score = Math.max(0, score - 10);
             localStorage.setItem('score', score);
             updateDisplay();
         });
@@ -82,6 +116,14 @@
             const progress = (score % 10) * 10; // progress toward next level
             progressBar.style.width = progress + '%';
             messageEl.textContent = `Level ${level}`;
+            updateNails(level);
+        }
+
+        function updateNails(level) {
+            nails.forEach(nail => {
+                nail.style.height = 20 + level * 5 + 'px';
+            });
+
         }
     </script>
 </body>
