@@ -122,11 +122,6 @@
             updateDisplay();
         });
 
-        resetBtn.addEventListener('click', () => {
-            score = 0;
-            localStorage.removeItem('score');
-            updateDisplay();
-        });
         function updateDisplay() {
             scoreEl.textContent = `Score: ${score}`;
             const level = Math.floor(score / 10);
