@@ -107,7 +107,6 @@
             localStorage.setItem('score', score);
             updateDisplay();
         });
-
         function updateDisplay() {
             scoreEl.textContent = `Score: ${score}`;
             const level = Math.floor(score / 10);
