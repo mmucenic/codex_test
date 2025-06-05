@@ -93,10 +93,12 @@
         const messageEl = document.getElementById('message');
         const nails = document.querySelectorAll('.nail');
 
+
         let score = parseInt(localStorage.getItem('score')) || 0;
         updateDisplay();
 
         resistBtn.addEventListener('click', () => {
+
             score += 1;
             localStorage.setItem('score', score);
             updateDisplay();
@@ -107,6 +109,7 @@
             localStorage.setItem('score', score);
             updateDisplay();
         });
+
         function updateDisplay() {
             scoreEl.textContent = `Score: ${score}`;
             const level = Math.floor(score / 10);
@@ -120,6 +123,7 @@
             nails.forEach(nail => {
                 nail.style.height = 20 + level * 5 + 'px';
             });
+
         }
     </script>
 </body>
