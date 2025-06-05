@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nail Biting Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+        }
+        main {
+            padding: 2rem;
+        }
+        #score {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+        button {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            margin: 0.5rem;
+            cursor: pointer;
+        }
+        #hand {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            height: 140px;
+            align-items: flex-end;
+        }
+        .finger {
+            position: relative;
+            width: 40px;
+            background-color: #f5d6c6;
+            margin: 0 5px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+        }
+        .thumb { height: 80px; }
+        .index { height: 100px; }
+        .middle { height: 110px; }
+        .ring { height: 100px; }
+        .pinky { height: 80px; }
+        .finger .nail {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 4px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px 5px 8px 8px;
+            height: 20px;
+            transition: height 0.3s;
+        }
+        #progress {
+            width: 80%;
+            margin: 1rem auto;
+            background-color: #ddd;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4CAF50;
+        }
+        #message {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Stop Nail Biting Game</h1>
+    </header>
+    <main>
+        <p>Press the button each time you resist the urge to bite your nails.</p>
+        <div id="score">Score: 0</div>
+        <div id="progress"><div id="progress-bar"></div></div>
+        <div id="hand">
+            <div class="finger thumb"><div class="nail"></div></div>
+            <div class="finger index"><div class="nail"></div></div>
+            <div class="finger middle"><div class="nail"></div></div>
+            <div class="finger ring"><div class="nail"></div></div>
+            <div class="finger pinky"><div class="nail"></div></div>
+        </div>
+        <button id="resist-btn">I Resisted!</button>
+        <button id="succumb-btn">I Succumbed</button>
+        <button id="reset-btn">Reset</button>
+        <div id="message"></div>
+    </main>
+
+    <script>
+        const resistBtn = document.getElementById('resist-btn');
+        const succumbBtn = document.getElementById('succumb-btn');
+        const scoreEl = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const messageEl = document.getElementById('message');
+        const resetBtn = document.getElementById('reset-btn');
+        const nails = document.querySelectorAll('.nail');
+
+        let score = parseInt(localStorage.getItem('score')) || 0;
+        updateDisplay();
+
+        resistBtn.addEventListener('click', () => {
+            score += 1;
+            localStorage.setItem('score', score);
+            updateDisplay();
+        });
+
+        succumbBtn.addEventListener('click', () => {
+            score = Math.max(0, score - 10);
+            localStorage.setItem('score', score);
+            updateDisplay();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            score = 0;
+            localStorage.removeItem('score');
+            updateDisplay();
+        });
+        function updateDisplay() {
+            scoreEl.textContent = `Score: ${score}`;
+            const level = Math.floor(score / 10);
+            const progress = (score % 10) * 10; // progress toward next level
+            progressBar.style.width = progress + '%';
+            messageEl.textContent = `Level ${level}`;
+            updateNails(level);
+        }
+
+        function updateNails(level) {
+            nails.forEach(nail => {
+                nail.style.height = 20 + level * 5 + 'px';
+            });
+        }
+    </script>
+</body>
+</html>
