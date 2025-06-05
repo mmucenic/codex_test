@@ -34,6 +34,7 @@
             display: flex;
             justify-content: center;
             margin-top: 1rem;
+            height: 140px;
             height: 120px;
             align-items: flex-end;
         }
@@ -45,16 +46,23 @@
             margin: 0 5px;
             border-radius: 20px;
             overflow: hidden;
+            display: flex;
+            align-items: flex-end;
         }
+        .thumb { height: 80px; }
+        .index { height: 100px; }
+        .middle { height: 110px; }
+        .ring { height: 100px; }
+        .pinky { height: 80px; }
         .finger .nail {
             position: absolute;
-            top: 0;
             left: 0;
             right: 0;
+            bottom: 0;
             margin: 4px;
             background-color: #fff;
             border: 1px solid #ccc;
-            border-radius: 8px 8px 5px 5px;
+            border-radius: 5px 5px 8px 8px;
             height: 20px;
             transition: height 0.3s;
         }
@@ -86,11 +94,11 @@
         <div id="score">Score: 0</div>
         <div id="progress"><div id="progress-bar"></div></div>
         <div id="hand">
-            <div class="finger"><div class="nail"></div></div>
-            <div class="finger"><div class="nail"></div></div>
-            <div class="finger"><div class="nail"></div></div>
-            <div class="finger"><div class="nail"></div></div>
-            <div class="finger"><div class="nail"></div></div>
+            <div class="finger thumb"><div class="nail"></div></div>
+            <div class="finger index"><div class="nail"></div></div>
+            <div class="finger middle"><div class="nail"></div></div>
+            <div class="finger ring"><div class="nail"></div></div>
+            <div class="finger pinky"><div class="nail"></div></div>
         </div>
         <button id="resist-btn">I Resisted!</button>
         <button id="succumb-btn">I Succumbed</button>
@@ -122,6 +130,11 @@
             updateDisplay();
         });
 
+        resetBtn.addEventListener('click', () => {
+            score = 0;
+            localStorage.removeItem('score');
+            updateDisplay();
+        });
         function updateDisplay() {
             scoreEl.textContent = `Score: ${score}`;
             const level = Math.floor(score / 10);
